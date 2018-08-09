@@ -8,6 +8,7 @@ const submit = document.querySelector('#submit')
 const input = document.querySelector('input')
 const comment = document.querySelector('div#list')
 const ul = document.querySelector('ul.likes')
+const allButtons = document.querySelectorAll('button')
 let i = 0;
 let c = 0;
 let li
@@ -15,7 +16,7 @@ let setInt
 
 
 
-function init() {
+function init = ()=>{
 createTimer()
 button_increment.addEventListener('click', increment)
 button_decrement.addEventListener('click', decrement)
@@ -25,7 +26,7 @@ submit.addEventListener("click", submitComment)
 }
 
 
-function createTimer()
+createTimer = () =>
 {
   setInt = setInterval(function() {
   c=0;
@@ -34,52 +35,67 @@ function createTimer()
   }, 1000)
 }
 
-function increment(e)
+increment = (e)=>
 {
   i++
   counter.innerText = i
 }
 
-function decrement(e)
+decrement = (e)=>
 {
   i--
   counter.innerText = i
 }
 
-function like(e)
+like = (e)=>
 {
   c++
   if (document.getElementById(`${counter.innerText}`) === null)
   {
     li = document.createElement('li')
     li.id = counter.innerText
-    li.innerText = `You like ${c} time(s) the number ${counter.innerText}`
+    li.innerText = `You like ${c} time the number ${counter.innerText}`
     ul.appendChild(li);
   }else
   {
-    li.innerText = `You like ${c} time(s) the number ${counter.innerText}`
+    li.innerText = `You like ${c} times the number ${counter.innerText}`
   }
 }
 
-function pause(e)
+pause = (e)=>
 {
-  if (button_pause.innerText === 'pause'){
+  if (button_pause.innerText === 'pause')
+  {
     clearInterval(setInt)
     button_pause.innerText = 'play'
+    allButtons.forEach((button)=>
+    {
+      if (button.id != 'pause')
+      {
+        button.disabled = true
+      }
+    })
   }
   else
   {
     createTimer()
     button_pause.innerText = 'pause'
+    allButtons.forEach((button)=>
+    {
+      if (button.id !== 'pause')
+      {
+        button.disabled = false
+      }
+    })
   }
 }
 
-function submitComment(e){
+submitComment = (e)=>{
   e.preventDefault()
 
   let p = document.createElement('p');
   p.innerText = input.value;
   comment.appendChild(p);
-
-  input.value = ""
+  form = document.querySelector('#comment-form')
+  form.reset()
 }
